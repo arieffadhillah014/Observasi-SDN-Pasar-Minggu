@@ -36,27 +36,21 @@
         }
         .toast-animate { animation: slideInRight 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
 
-        /* KODE CETAK YANG DISEMPURNAKAN UNTUK MENGHILANGKAN KERTAS KOSONG */
         @media print {
-            /* 1. Hilangkan total ruang body agar peramban mereset ukuran kertas murni */
             html, body {
                 height: 100% !important;
-                overflow: hidden !important; /* Mencegah halaman scrollbar palsu */
+                overflow: hidden !important;
                 background: white !important;
                 color: black !important;
                 margin: 0 !important;
                 padding: 0 !important;
             }
-            
-            /* 2. Sembunyikan elemen secara absolut tanpa menyisakan ruang margin setitik pun */
             #sidebar, main, #toast-container, #confirm-modal, .no-print, header {
                 display: none !important;
                 height: 0 !important;
                 margin: 0 !important;
                 padding: 0 !important;
             }
-            
-            /* 3. Bebaskan modal dari jeratan Fixed Screen & Reset ke titik 0 koordinat kertas */
             #print-modal {
                 position: absolute !important;
                 left: 0 !important;
@@ -69,8 +63,6 @@
                 overflow: visible !important;
                 opacity: 1 !important;
             }
-            
-            /* 4. Format bersih dimensi kertas (Kertas akan mekar alami menyesuaikan printer) */
             .a4-paper {
                 box-shadow: none !important;
                 margin: 0 !important;
@@ -81,12 +73,10 @@
                 border: none !important;
                 background: white !important;
             }
-            
             * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
             tr { page-break-inside: avoid; }
         }
         
-        /* FIX: Kertas Preview harus dikunci warna #ffffff murni */
         .a4-paper {
             background-color: #ffffff !important;
             width: 210mm;
@@ -161,7 +151,7 @@
                 </button>
             </nav>
             <div class="p-4 border-t border-brand-800 text-center text-xs text-brand-400">
-                <p class="font-medium">Sistem Observasi Kelas v6.5</p>
+                <p class="font-medium">Sistem Observasi Kelas v6.1</p>
                 <p class="text-[10px] opacity-60 mt-0.5">Real-Time Cloud Sync Edition</p>
             </div>
         </aside>
@@ -268,10 +258,12 @@
                                     <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">NIP Guru</label>
                                     <input type="text" id="input-nip" readonly class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-500 outline-none">
                                 </div>
+                                
                                 <div>
-                                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Mata Pelajaran / Tugas</label>
-                                    <input type="text" id="input-subject" readonly class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-500 outline-none">
+                                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Mata Pelajaran</label>
+                                    <input type="text" id="input-subject" required class="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none transition-all text-slate-700" placeholder="Ketik atau edit mata pelajaran...">
                                 </div>
+
                                 <div class="flex gap-4">
                                     <div class="w-1/2">
                                         <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Kelas</label>
@@ -310,7 +302,8 @@
                                     <thead>
                                         <tr class="bg-slate-100 border-b border-slate-200 text-slate-700 font-bold">
                                             <th class="p-4 pl-6 w-2/5">Aspek Pengamatan & Kriteria Kinerja</th>
-                                            <th class="p-4 text-center w-3/5">Skor Penilaian (1-10) & Catatan Bukti Kinerja</th>
+                                            <th class="p-4 text-center w-72">Skor Penilaian (1-10)</th>
+                                            <th class="p-4 pr-6 w-2/5">Bukti Perilaku / Catatan Khusus Kerja</th>
                                         </tr>
                                     </thead>
                                     <tbody id="rubrik-tbody" class="divide-y divide-slate-200"></tbody>
@@ -444,7 +437,7 @@
                 <tbody>
                     <tr><td class="w-[28%] font-bold py-1">Nama Guru Terobservasi</td><td class="w-[2%] py-1">:</td><td id="p-teacher-name" class="w-[70%] py-1">-</td></tr>
                     <tr><td class="font-bold py-1">NIP</td><td class="py-1">:</td><td id="p-teacher-nip" class="py-1">-</td></tr>
-                    <tr><td class="font-bold py-1">Mata Pelajaran / Kelas</td><td class="py-1">:</td><td id="p-subject-grade" class="py-1">-</td></tr>
+                    <tr><td class="font-bold py-1">Mata Pelajaran</td><td class="py-1">:</td><td id="p-subject-grade" class="py-1">-</td></tr>
                     <tr><td class="font-bold py-1">Hari / Tanggal Pelaksanaan</td><td class="py-1">:</td><td id="p-date" class="py-1">-</td></tr>
                     <tr><td class="font-bold py-1">Materi Pokok Bahasan</td><td class="py-1">:</td><td id="p-topic" class="py-1">-</td></tr>
                     <tr><td class="font-bold py-1">Jam Pelajaran Ke- / Waktu</td><td class="py-1">:</td><td id="p-period" class="py-1">-</td></tr>
@@ -495,7 +488,7 @@
                     <p id="p-sign-teacher-name" class="font-bold underline">Nama Guru</p><p id="p-sign-teacher-nip">NIP. -</p>
                 </div>
                 <div class="text-center">
-                    <p>Mengetahui/Menilai,<br>Kepala Sekolah SDN,</p><div class="h-20"></div>
+                    <p>Mengetahui/Menilai,<br>Kepala Sekolah,</p><div class="h-20"></div>
                     <p class="font-bold underline">Yudi Irawan, S.Pd.SD.</p><p>NIP. 198209092014081002</p>
                 </div>
             </div>
@@ -682,34 +675,22 @@
                 STRUKTUR_RUBRIK.forEach(cat => {
                     tbody.innerHTML += `
                         <tr class="bg-slate-50/70 font-bold text-slate-700 border-b border-slate-200">
-                            <td colspan="2" class="p-3 pl-6 text-xs uppercase tracking-wider text-brand-600 bg-brand-50/50"><i class="fa-solid fa-bookmark mr-1"></i> Kategori Kinerja: ${cat.kategori}</td>
+                            <td colspan="3" class="p-3 pl-6 text-xs uppercase tracking-wider text-brand-600 bg-brand-50/50"><i class="fa-solid fa-bookmark mr-1"></i> Kategori Kinerja: ${cat.kategori}</td>
                         </tr>
                     `;
                     cat.item.forEach(item => {
-                        let radioGroupHtml = '';
-                        for (let i = 1; i <= 10; i++) {
-                            radioGroupHtml += `
-                                <div class="flex justify-center items-center">
-                                    <input type="radio" name="skor-${item.id}" id="skor-${item.id}-${i}" value="${i}" required class="hidden radio-skor radio-skor-${i}">
-                                    <label for="skor-${item.id}-${i}" class="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-xs text-slate-400 bg-white border border-slate-200 cursor-pointer hover:bg-slate-50 transition-all select-none shadow-sm">${i}</label>
-                                </div>
-                            `;
-                        }
-
+                        // Perbaikan: Tidak menggunakan escape karakter backslash (\$) di dalam template literal JS.
                         tbody.innerHTML += `
                             <tr class="border-b border-slate-100 hover:bg-slate-50/50 transition-colors">
-                                <td class="p-5 pl-6 text-slate-700 font-medium leading-relaxed w-2/5">${item.text}</td>
-                                <td class="p-5 pr-6 w-3/5 space-y-4">
-                                    <div class="flex flex-col gap-2">
-                                        <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Pilih Skor Keselarasan:</span>
-                                        <div class="grid grid-cols-10 gap-1 w-full bg-slate-100/80 p-1.5 rounded-2xl border border-slate-200">
-                                            ${radioGroupHtml}
-                                        </div>
+                                <td class="p-4 pl-6 text-slate-700 font-medium leading-relaxed">${item.text}</td>
+                                <td class="p-4 text-center">
+                                    <div class="inline-flex rounded-xl bg-slate-100 p-1 gap-1 flex-wrap justify-center w-full">
+                                        ${[1,2,3,4,5,6,7,8,9,10].map(i => `<input type="radio" name="skor-${item.id}" id="skor-${item.id}-${i}" value="${i}" required class="hidden radio-skor radio-skor-${i}">
+                                        <label for="skor-${item.id}-${i}" class="w-7 h-7 rounded-lg flex items-center justify-center font-bold text-[10px] text-slate-400 bg-white border border-slate-200 cursor-pointer hover:bg-slate-50 transition-all select-none">${i}</label>`).join('')}
                                     </div>
-                                    <div class="flex flex-col gap-1.5">
-                                        <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Catatan Bukti Perilaku Kinerja:</span>
-                                        <textarea id="note-${item.id}" rows="2" placeholder="Tulis catatan bukti empiris otentik langsung di sini..." class="w-full text-xs border border-slate-300 rounded-xl px-4 py-2.5 focus:border-brand-500 outline-none transition-all resize-none shadow-sm"></textarea>
-                                    </div>
+                                </td>
+                                <td class="p-4 pr-6">
+                                    <textarea id="note-${item.id}" rows="1" placeholder="Catatan bukti otentik..." class="w-full text-xs border border-slate-300 rounded-lg px-3 py-1.5 focus:border-brand-500 outline-none transition-all resize-none"></textarea>
                                 </td>
                             </tr>
                         `;
@@ -721,6 +702,9 @@
                 e.preventDefault();
                 const tId = document.getElementById('input-teacher-select').value;
                 const teacher = MASTER_TEACHERS.find(t => t.id === tId);
+                
+                // Mengambil nilai aktual yang mungkin sudah diedit pada form
+                const actualSubject = document.getElementById('input-subject').value;
                 
                 let scores = {}, notes = {}, totalScore = 0, count = 0;
                 STRUKTUR_RUBRIK.forEach(cat => {
@@ -745,7 +729,7 @@
                     teacherId: tId,
                     teacherName: teacher.name,
                     teacherNip: teacher.nip,
-                    subject: teacher.subject,
+                    subject: actualSubject, // Gunakan mata pelajaran dari input form, bukan object dasar
                     grade: `${document.getElementById('input-kelas').value} / ${document.getElementById('input-semester').value}`,
                     topic: document.getElementById('input-topic').value,
                     period: document.getElementById('input-period').value,
@@ -993,9 +977,8 @@
                 const o = this.observations.find(item => item.id === id);
                 if (!o) return;
 
-                // Modifikasi penulisan data identitas tanpa duplikasi "NIP"
                 document.getElementById('p-teacher-name').innerText = o.teacherName;
-                document.getElementById('p-teacher-nip').innerText = o.teacherNip; // <-- Teks "NIP." sudah dihapus!
+                document.getElementById('p-teacher-nip').innerText = `NIP. ${o.teacherNip}`;
                 document.getElementById('p-subject-grade').innerText = `${o.subject} / ${o.grade.split(' / ')[0]}`;
                 document.getElementById('p-date').innerText = new Date(o.date).toLocaleDateString('id-ID', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
                 document.getElementById('p-topic').innerText = o.topic;
@@ -1087,4 +1070,4 @@
         window.addEventListener('DOMContentLoaded', () => app.init());
     </script>
 </body>
-</html>
+</html>}
